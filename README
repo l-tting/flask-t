@@ -1,0 +1,193 @@
+FUNCTIONS 
+A block of reusable code used to perform specific tasks 
+
+Variables
+Data Types
+Operators
+If statements
+Data Structures
+Loops 
+Functions 
+
+
+Why Use Functions?
+1. Code Reusability
+2. Modularity - breaking large codebase into smaller managaebale pieces or modules
+3. Readability & Organization
+4. Easier debugging - catch and solve errors betterr
+5. Better scaling
+
+
+Python functions -> syntax ->
+def function_name:
+    //function body
+
+
+def add_numbers(a,b):   ---> function definition
+def test_functions():
+function defintion -> def keyword, 
+                -> function signature(name of your function + whether the function has parameters   or not )
+
+-> parameter - placeholder values
+-> arguments - real values
+
+add_numbers(number1,number2). -> function call -> pass arguments
+
+function definition
+function body
+function call
+
+functions are used with return keyword 
+return keyword -> return some value from a function. && signify the end of a function
+
+
+Global vs Local Variables 
+Global Variable - a variable that can be accessed anywhere in the program
+Local Variable - are variables that are only accessible in their local/block scope
+
+
+Function 
+Methods - functions attached to classes - OOP -Object Oriented Programming - classes and objects
+
+
+Types of functions
+1.Inbuilt functions - come with the progamming language and have predefined tasks e.g print()
+2.user defined functions - created by the programmer - > def add_numbers():
+
+
+
+
+1.Python - functions, lists ,tuples , data types
+2.sql - queries 
+
+
+
+Create a new project called MyDuka 
+-main.py 
+-database.py
+
+-> Open a new terminal and run the following commands to install the packages below
+1. pip install flask
+2. pip install psycopg2-binary
+
+
+Functions
+A Function is a block of reusable code used to perform specific tasks
+
+
+Variables
+Data types
+Operators
+if statements
+data structures
+loops
+
+functions
+
+Why use Functions?
+1. Reusability
+2. Code organization and readability
+3. Modularity - breaking large code into smaller manageable pieces or modules
+4. Easier debugging - catch  errors better and faster
+
+Types of Functions:
+1.Inbuilt functions - come with the programming language and are meant to do specific predefined tasks
+    -range() -print()
+2.User-defined functions - are created by the user for their use - def calculate()
+
+**parameter -> temporary/placeholder variables / values in the function
+**return -> returns some value from a function call and signifies the end of a function
+**arguments -> real values passed to a function when calling it
+
+**Global variables - variables that are accessible from anywhere in the program
+**Local variables - variables that are only accessible in their local / block scope
+
+
+Internet - network of networks
+web/www -> service that runs on the internet that enables us to connect to the internet
+Uses http && https to run requests and transfer data
+
+https://meet.google.com/dsh-idtb-oqb
+
+http & https -> transfer protocols -> establish communication and transfer data over a network
+
+http - not secure -packets / data can be tampered with
+https - data encryption -> 
+
+Server - a computer that accepts requests
+
+Build your application
+Host it on a server
+Ip address is assigned to that application 
+
+Ip address is a number used to uniquely identify a device on a network e.g 142.111.12.82
+Domain - user friendly name attached to an ip aaddress used to identify devices / applications
+
+Safaricom - build application - safaricom.co.ke
+-host it on a server
+-ip address assigned to application e.g  142.111.12.82
+-attach a domain name to ip address -> www.google.com
+DNS
+
+Find an ip address using domain -> ping 
+
+
+
+PSYCOPG2
+
+Is a PostgreSQL adapater for Python . A driver - connects your Python code to a Postgres database
+
+ psycopg2.connect(). - creates a connection between Python and a Postgres database
+
+
+create database myduka_db;
+\c myduka_db
+
+
+insert into products(name,buying_price,selling_price)values('bread',50,60);
+
+host -> where is my db located 
+**localhost -> your computer/device  127.0.0.1
+
+port -> where exactly on my device is the Postgres service running
+**5432 -> default Postgres port
+
+user & password -> used to authenticte a postgres user and grant them access to a Postgres database
+
+dbname - Postgres database you're connecting to
+
+cur -> object used to execute sql queries or perform db operations
+cur.execute() -> executes an sql query
+
+Insert 2 sales and view them using psycopg2
+
+N/B:- List of tuples
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    buying_price NUMERIC(20, 2) NOT NULL CHECK (buying_price >= 0),
+    selling_price NUMERIC(20, 2) NOT NULL CHECK (selling_price >= 0)
+);
+
+CREATE TABLE stock (
+    id SERIAL PRIMARY KEY,
+    pid INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    stock_quantity INTEGER NOT NULL CHECK (stock_quantity >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sales (
+    id SERIAL PRIMARY KEY,
+    pid INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone_number VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
