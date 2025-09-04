@@ -28,7 +28,7 @@ def test_functions():
 function defintion -> def keyword, 
                 -> function signature(name of your function + whether the function has parameters   or not )
 
--> parameter - placeholder values
+-> parameter - placeholder / temporary values
 -> arguments - real values
 
 add_numbers(number1,number2). -> function call -> pass arguments
@@ -163,31 +163,158 @@ Insert 2 sales and view them using psycopg2
 
 N/B:- List of tuples
 
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    buying_price NUMERIC(20, 2) NOT NULL CHECK (buying_price >= 0),
-    selling_price NUMERIC(20, 2) NOT NULL CHECK (selling_price >= 0)
-);
+insert into sales(pid,quantity)values(1,20);
 
-CREATE TABLE stock (
-    id SERIAL PRIMARY KEY,
-    pid INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-    stock_quantity INTEGER NOT NULL CHECK (stock_quantity >= 0),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+CRUD 
+C-Create  - Insert
+R-Read.   - Select
+U-Update. -Update
+D-Delete. -Delete
 
-CREATE TABLE sales (
-    id SERIAL PRIMARY KEY,
-    pid INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-    quantity INTEGER NOT NULL CHECK (quantity > 0),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+double quote query
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    phone_number VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
+Object Oriented Programming - OOP
+
+Data Types -
+1.Inbuilt data types -> come with the programming language
+-> int , float , str, boolean -primitive
+-> lists, sets , tuples , dicts
+
+2.user defined data types - created by the programmer
+-> create classes (blueprints) then create objects from it
+e.g. Create a data type called Person (class) then create Alvin(object) from Person
+-classes are created using the class keyword
+
+Class - a blueprint for creating objects 
+
+Classes contain the following 2 things:
+1.Attributes - data / variables -> what does a class have? e.g name, age
+2.Behaviour  - functions (methods) - what a class can do? - walk, eat, talk
+
+Method - a function inside a class
+
+Constructor - a special method used to create and initialize objects
+
+class - blueprint
+object - an instance of a class
+
+self - represents the current object / instance of the class
+
+
+Task 
+Create a BankAccount class
+Have a constructor to initalize the account with account number , balance , owner_name
+Have the methods:
+1. deposit() 
+2. withdraw()
+3. display_info()
+create 2 BankAccounts that can deposit, withdraw and display info
+
+
+Task2
+Create a Student class
+It should have the following attributes:
+ -student_id -name -email -course
+ It should have the following methods:
+ - enroll_course()
+ - drop_course()
+ - set_grade()
+-  display_info()
+Create 2 student objects who can do all of the above
+
+
+#inheritance
+
+
+Task3
+Create a Car Class
+Have the following attributes
+- brand - model - year -fuel_capcity - fuel_level -is_running(boolen value)
+Have the methods
+- start()
+- stop()
+- refuel()
+- drive()
+- display_car_info()
+
+1.Inheritance
+2.Encapsulation
+3.Abstraction ->
+4.Polymorphism -> Method Overriding
+*Method overriding, method overloading, operator overloding , aggregation , association
+
+
+FLASK
+A python framework used to build web applications
+
+Framework vs Library?
+
+Concept -Building A House
+Scenario 1 - Framework
+Feisal wants to build a house.he recognizes that he isnt an expert in building / construction. He decides to enlist 
+the help of construction professionals (architect, engineer, pm , construction workers). These professionals each play a role in building the house and they make the process easier since they have experience. But for successful construction, Feisal has to follow the strict guidelines as laid out by these professionals e.g the house has to have a strong foundation / walls must be built using bricks 
+Note -> easier process but strict guidelines
+
+
+Scenario 2 - Library
+Stephen wants to build a house. He decides he doesnt need the help of construction professionals,instead he decides to build the house
+from sratch himself. He has to to design , correct, know and purchase all materials himself. Since he oversees the entire process he doesnt need to follow ny guideline or timeline. He's solely in charge of everything.
+Note-> The process is flexible but very hard
+
+
+Framework -> prebuilt structure of code ,tools, libraies that provides a foundation for building applications. It provided prebuilt and reusable code so that developers dont have to build from scratch
+-> Has very strict guidelines on usage
+
+Examples:
+Python -> Flask, FastAPI, Django
+Java -> Spring
+C# -> .NET
+NodeJS -> Express
+Ruby -> Ruby on Rails
+Golang -> Gin
+
+FLASK
+1.Routing
+-> A mechanism to map / connect URLs to Python functions -> system for resource navigation -> connects a URL to a function in your Flask app
+
+URl -> full address used to access resources on the web
+https://meet.google.com/dsh-idtb-oqb
+->In flask routing is defined using a decorator function -> @app.route()
+-> Decorator is a function that allows you to modify the behaviour of another function -> usually have the @ prefix 
+-> @app.route() has some parameters:
+1.rule or path -> the path a user accesses on the browser
+2. methods
+
+https://meet.google.com/dsh-idtb-oqb
+
+https://techcamp.co.ke/
+https://techcamp.co.ke/contact-us
+https://techcamp.co.ke/certifications
+default route -> index route -> /
+
+
+
+@app.route('/') -> decorator function
+def home():   -> view function
+    return "My index route"
+
+
+Render or return a full html page
+To render Html pages with Flask we use a function: render_template() which is imported from flask
+To return a html page with render_template() you MUST have the following structure:
+
+MYDUKA
+templates
+    -> all html files must be here
+    -index.html
+    -products.html
+    -sales.html
+    -stock.html
+    -dashboard.html
+    -register.html
+    -login.html
+static
+    -> all css , js and all static files
+    -> static files - images , videos , favicons, icons
+database.py
+main.py
