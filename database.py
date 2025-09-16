@@ -1,15 +1,12 @@
 import psycopg2
 
 conn = psycopg2.connect(host='localhost',port='5432',user='postgres',password='6979',dbname='myduka_db') 
-
 cur = conn.cursor()
+
 def get_products():
     cur.execute("select * from products")
     products = cur.fetchall()
     return products
-
-products = get_products()
-print(type(products))
 
 
 #displaying sales
@@ -18,9 +15,6 @@ def get_sales():
     sales = cur.fetchall()
     return sales
 
-sales = get_sales()
-print(sales)
-
 
 #insert products
 def insert_products(product_values):
@@ -28,18 +22,51 @@ def insert_products(product_values):
     conn.commit()
 
 
-products1= ('juice',150,170)
-products2 = ('flour',140,180)
-
-insert_products(products1)
-insert_products(products2)
-
-
-def insert_sales():
-    cur.execute("insert into sales(pid,quantity)values(2,30)")
+def insert_sales(sales_values):
+    cur.execute(f"insert into sales(pid,quantity)values{sales_values}")
     conn.commit()
 
-# insert_sales()
+
+def get_stock():
+    cur.execute("select * from stock")
+    stock = cur.fetchall()
+    return stock
+
+
+def add_stock(stock_values):
+    cur.execute(f"insert into stock(pid,stock_quantity)values{stock_values}")
+    conn.commit()
+
+
+def available_stock(pid):
+    cur.execute(f"select sum(stock_quantity) from stock where pid = {pid}")
+    total_stock = cur.fetchone()[0] or 0
+    
+    cur.execute(f"select sum(quantity) from sales where pid = {pid}")
+    total_sales = cur.fetchone()[0] or 0
+
+    return total_stock - total_sales
+
+
+def insert_user(user_details):
+    cur.execute(f"insert into users(full_name,email,phone_number,password)values{user_details}")
+    conn.commit()
+
+
+def check_user(email):
+    cur.execute("select * from users where email = %s",(email,))
+    user = cur.fetchone()
+    return user
+
+registered_user = check_user('brian@mail.com')
+print(registered_user)
+(1, 'Brian', 'brian@mail.com', '0714989269', '$2b$12$p0JXnlaasvqQcb1MqIn8s.Nr0HyqLMPRzN0rihovuYqQUmZEQT3o2')
+
+
+
+
+
+
 
 
 

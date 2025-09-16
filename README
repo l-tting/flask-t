@@ -318,3 +318,282 @@ static
     -> static files - images , videos , favicons, icons
 database.py
 main.py
+
+
+To pass data from Python to html we use Jinja
+
+Jinja - a syntax inbuilt with Flask used to render Python data
+- Is a templating engine integrated with Flask to render dynamic html pages
+
+
+Key features of Jinja
+1.Variables - {{}}
+2.Control structures - {% %}
+Control Structures
+1.Sequence
+-> programs execute top to bottom and left to right
+2.Selection
+-> Decision making
+-> Conditional statements -> if...else
+3.Repitition
+-> Looping -> for ,while
+
+{% for ....%} - initialization
+
+.....
+
+{% endfor %} - termination
+
+
+{% if ....%}
+
+....
+
+
+{% endif %}
+
+Task ->
+1.Import get_sales() and display sales in sales.html using Jinja
+2.Disply both sales and products data in tables
+---Hint Use for loop and indexing 
+
+
+Jinja
+A templating engine integrated with Flask to render dynamic html pages
+-> Use it to pass data from Python to html
+1.Variables - {{}} 
+2.Control Structures - {% %}
+
+Control Structures
+1.Sequence - top to bottom --> left to right
+2.Selection - conditional statements -> if 
+3.Repitition - Looping - for and while loop
+
+{% for i in products%}
+
+        {{i}}
+
+
+{% endfor %}
+
+{% if i%2 == 0%}
+
+....
+
+{% endif %}
+
+Displaying Data In Client
+1.Bootstrap Tables
+2.Datatables - search, paginations, excel, print
+
+
+#Task
+1. Redo the products display using datatables
+2. In  the sales table in created at column limit datetime data to year, month, day , hour and minute
+
+TEMPLATE INHERITANCE
+ONE COMMON FILE CALLED A PARENT / BASE TEMPLATE CONTAINING ALL FEATURES THT ARE COMMON ACROSS ALL PAGES e.g footer & navbar
+
+Base -has all common features 
+-> Leaves a block for unique features
+
+{% block title %} {% endblock %} - define a unique title for each template
+{% block content %} {% endblock %} -> define unique content  for each template
+
+Have the children templates inherit from the base - extends
+
+
+
+Function in database.py
+import function to main.py
+call it in route
+pass a variable in render_template() containing data from function call
+Use Jinja to display data in the relevant page
+
+Inserting Data in Flask
+Inserting Products
+CRUD
+
+WORKFLOW
+1.Provide the user with a form to insert data
+2.User fills the form and submits it - submitted to a Flask route
+N/B: - data coming from the form is sent to the server in key value pairs 
+
+        "product_name":"eggs"
+        "buying_price":"15"
+        "selling_price":"20"
+
+        N/B:-
+        -> Any data coming from user input will always be a string
+3.Flask extracts form data using the key and processes it 
+    -> In the decorator ->METHODS THAT CAN BE USED 
+    -> Extract data from the form using a request object
+    -> request object has 2 methods:
+    a) request.form - method used to access and extract form data using the keys
+    b) request.method - method used to determine the method being used by the form
+4.Store this data using functions
+5.Redirect the user - redirect-url_for
+redirect(url_for('')) -takes the name of the view function as a parameter
+
+
+FORM CHECKLIST
+1.action - defines the route where the form data is to be submitted for processing .../add_products
+2.method - what do you want the server to do with the data
+3.name - key used to identify and extract values from the input
+4.input-type -> defining what data type an input takes
+5.button - type submit
+
+
+Method - what a server can do with a resource or data
+a) GET - fetching / getting from a server - viewing tweets
+b) POST - sending data to a server - insert products, login
+c) PUT - update data
+d) DELETE - getting rid of data
+
+Task
+1.Implement adding and displaying stock(datatables)
+-> adding stock is exactly like making 
+2.Implement adding products using a modal
+
+
+
+
+Status Codes- unique codes inditicating what happened with a HTTP request
+100-199 -> Informational responses
+200-299 -> Successful responses
+300-399 - redirection messages
+400-499 - client error 
+500-599 - server errors
+
+Making Purchases 
+1,bread,50,60 -> 100
+
+bread - 10
+bread - 90
+bread - purchase 90
+bread - 0
+
+ id | pid | stock_quantity |         created_at         
+----+-----+----------------+----------------------------
+  1 |   1 |             5 | 2025-09-12 14:57:21.175323
+
+
+
+  12 - 7 = 5
+
+   id | pid | stock_quantity |         created_at         
+----+-----+----------------+----------------------------
+  1 |   1 |             12 | 2025-09-12 14:57:21.175323
+  2 |   1 |             20 | 2025-09-12 15:29:27.168993 
+
+32
+
+#sales
+   id | pid | quantity |         created_at         
+----+-----+----------+----------------------------
+  8 |   1 |        8 | 2025-09-12 16:08:30.398638
+  9 |   1 |        4 | 2025-09-12 16:08:54.069659
+(2 rows)
+
+12
+=20
+
+
+(2 rows)
+32 - total stock
+
+7 loaves are purchased at time A
+10 loaves are purchased at time B
+
+17 sold
+
+32 - 17 = 15 loaves remaining
+
+getting available stock  = total stock added on a product - total sales of that product
+
+None && Zero
+
+add product -> add stock -> make sale
+roduct -> no stock
+product -> some stock -> no sales
+
+None - None
+
+100 - none
+
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+Flashing - one time notifications to users based on requests / interaction
+flash() - inbuilt function from flask
+-> it takes two parameters:
+1.Message -> the actual message to be displayed e.g Product added successfully
+2.Message Category -> type of message
+
+Message categories
+1.success messages ->green
+2.error / danger messages ->red
+3.warning messages -> yellow
+4.info messages -> blue
+
+Flash messages are stored in a session-> session is stored in a cookie
+Flask uses a secret key to keep data like sessions / messages safe
+
+jane@mail.com -> 1234 -> secret key signs the cookie
+The signature makes sure:
+1.data isnt modified
+2.only the server that knows the secret key can validate the session 
+
+
+User Authentication 
+1.register users
+2.authenticate & login these users
+
+User Registration
+User form with input fields - name, email, phone ,password
+1.User is provided with a form for registration
+2.User fills aand submits the form to Flask through -> CGI 
+3.Flask extracts user data using request.form
+4.Check if the user already exists using email
+5.If user exists -flash they exist and ask them to login instead
+6.If they dont exist (new user)
+    ->Hash the user's password 
+    ->Store the new user along with the hashed password
+
+Functions -> in database -> insert_user() -> check_user()
+
+
+Password Hashing
+-> The process of converting plain text passwords into complex formats that are hard to decipher for the purpose of security
+1234 -> 882b77egsgs6 672ygvdy676cxy2y7we7
+1234 -> 882b77egsgs6 672ygvdy676cxy2y7we7
+1234 -> 882b77egsgs6 672ygvdy676cxy2y7we7
+1234 -> 882b77egsgs6 672ygvdy676cxy2y7we7
+*Rainbow tables - common passwords
+*salting - generating random text, add it to a password to make it more complex and secure
+Hussein@123 -> #9jd88xhuyahz5tg29sius87shsyysh
+flask-bcrypt
+
+mx882u882w
+Hussein@123mx882u882w
+
+pip install flask-bcrypt
+
+N/B -> password stored in db -> hashed password
+
+in login user inputs plain text password
+
+
+
+
+
+
+
+
+
+
+TASK
+Write queries to fetch the following:
+1.sales per day
+2.sales per product
+3.profit per day
+4.profit per product
