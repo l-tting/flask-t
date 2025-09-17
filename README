@@ -597,3 +597,4 @@ Write queries to fetch the following:
 2.sales per product
 3.profit per day
 4.profit per product
+Display the above data in the dashboard page using Jinja

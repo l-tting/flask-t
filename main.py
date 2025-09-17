@@ -1,6 +1,7 @@
-from flask import Flask , render_template, request, redirect,url_for,flash
+from flask import Flask , render_template, request, redirect,url_for,flash,session
 from database import get_products, get_sales,insert_products,insert_sales,add_stock,get_stock,available_stock,check_user,insert_user
 from flask_bcrypt import Bcrypt
+from functools import wraps
 
 
 #creating a Flask instance
@@ -15,7 +16,17 @@ def home():
     return render_template("index.html")
 
 
+def login_required(f):
+    @wraps(f)
+    def protected(*args,**kwargs):
+        if 'email' not in session:
+            return redirect(url_for('login'))
+        return f(*args,**kwargs)
+    return protected
+
+
 @app.route('/products')
+@login_required
 def products():
     products = get_products()
     return render_template('products.html',products = products)
@@ -34,6 +45,7 @@ def add_products():
 
 
 @app.route('/sales')
+@login_required
 def sales():
     sales =get_sales()
     products = get_products()
@@ -56,6 +68,7 @@ def make_sale():
 
 
 @app.route('/stock')
+@login_required
 def stock():
     stock = get_stock()
     products = get_products()
@@ -73,6 +86,7 @@ def insert_stock():
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template("dashboard.html")
 
@@ -95,7 +109,6 @@ def register():
             return redirect(url_for('login'))
         else:
             flash("User already exists,please login","danger")
-
     return render_template("register.html")
 
 
@@ -114,13 +127,17 @@ def login():
         else:
             if bcrypt.check_password_hash(registered_user[-1],password):
                 flash("Logged in","success")
-
+                session["email"] = email
                 return redirect(url_for('dashboard'))
             else:
                 flash("Password incorrect,try again","danger")
-        
     return render_template("login.html")
 
+
+@app.route('/logout')
+def logout():
+    session.pop('email',None)
+    return redirect(url_for('login'))
 
 
 app.run(debug= True)

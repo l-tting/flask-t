@@ -41,10 +41,8 @@ def add_stock(stock_values):
 def available_stock(pid):
     cur.execute(f"select sum(stock_quantity) from stock where pid = {pid}")
     total_stock = cur.fetchone()[0] or 0
-    
     cur.execute(f"select sum(quantity) from sales where pid = {pid}")
     total_sales = cur.fetchone()[0] or 0
-
     return total_stock - total_sales
 
 
@@ -58,9 +56,7 @@ def check_user(email):
     user = cur.fetchone()
     return user
 
-registered_user = check_user('brian@mail.com')
-print(registered_user)
-(1, 'Brian', 'brian@mail.com', '0714989269', '$2b$12$p0JXnlaasvqQcb1MqIn8s.Nr0HyqLMPRzN0rihovuYqQUmZEQT3o2')
+
 
 
 
