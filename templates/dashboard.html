@@ -1,53 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{% extends 'base.html' %}
+{% block title %} Sales {% endblock %}
+{% block content %}
 
-</head>
-<body>
-    <div class="container">
-         <div>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">MyDuka</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/products">Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/sales">Sales</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/stock">Stock</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/dashboard">Dashboard</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/register">Register</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="/login">Login</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-
-        <p>This is the dashboard page</p>
+<div>
+    <div>
         <p>This is the dashboard page</p>
     </div>
+    <div>
+        <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+    </div>
+    <div>
+        <canvas id="line-chart" width="800" height="450"></canvas>
+    </div>
+</div>
+<script>
+  //barchart
+    new Chart(document.getElementById("bar-chart-grouped"), {
+        type: 'bar',
+        data: {
+            labels: {{ product_names | safe}}, 
+            datasets: [
+                {
+                    label: "Sales(Ksh.)",
+                    backgroundColor: "#3e95cd",
+                    data: {{sales_per_p | safe}}
+                }, {
+                    label: "Profit(Ksh.)",
+                    backgroundColor: "#8e5ea2",
+                    data: {{ profit_per_p | safe}}
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Sales and Profit per Product(KSH.)'
+            }
+        }
+    });
 
-</body>
-</html>
+
+
+//line chart
+    new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels:{{ date | safe }},
+    datasets: [{ 
+        data: {{ sales_per_d | safe }},
+        label: "Sales(ksh.)",
+        borderColor: "#3e95cd",
+        fill: false
+      }, { 
+        data: {{ profit_per_d | safe}},
+        label: "Profit(ksh.)",
+        borderColor: "#8e5ea2",
+        fill: false
+      }, 
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Sales and Profit per Day(KSH.)'
+    }
+  }
+});
+
+
+</script>
+
+{% endblock %}

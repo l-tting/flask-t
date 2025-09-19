@@ -587,14 +587,44 @@ in login user inputs plain text password
 
 
 
-
-
-
-
 TASK
 Write queries to fetch the following:
 1.sales per day
+selling price & quantity & created_at
 2.sales per product
 3.profit per day
 4.profit per product
 Display the above data in the dashboard page using Jinja
+
+
+DASHBOARD
+Data visualization ->  make use of charts e.g bar, line ,histograms ,pie charts, heat map, frequency polygon e.t.c
+1.Bar - categorical data e.g product names
+->sales per product
+->profit per product
+2.Line Chart - continuous data  -> trends over time
+-> sales per day
+-> profit per day
+
+#sales per day
+select date(sales.created_at) as date, sum(products.selling_price * sales.quantity) as total_sales from products
+inner join sales on sales.pid = products.id group by(date);
+
+#profit per day
+select date(sales.created_at) as date, sum((products.selling_price - products.buying_price)* sales.quantity) as profit from sales join products on products.id = sales.pid group by(date);
+
+#sales per product
+select products.name as p_name, sum(sales.quantity * products.selling_price) as total sales from products join sales on
+products.id = sales.pid group by(p_name);
+
+#profit per product
+ select products.name as p_name ,sum((products.selling_price - products.buying_price) * sales.quantity) as profit from
+ sales join products on sales.pid = products.id group by(p_name);
+
+
+
+#LIST COMPREHENSIONS
+-> Shorthand for looping and adding items to a list in one line
+
+
+
